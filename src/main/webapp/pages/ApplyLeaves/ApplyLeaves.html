@@ -1,0 +1,45 @@
+<wm-page pagetitle="Apply Leaves" name="page1">
+    <wm-header content="header" name="header1"></wm-header>
+    <wm-top-nav content="topnav" name="top_nav1"></wm-top-nav>
+    <wm-content name="content1">
+        <wm-left-panel columnwidth="2" content="leftnav" name="left_panel1"></wm-left-panel>
+        <wm-page-content columnwidth="10" name="page_content1">
+            <wm-label padding="unset 0.5em" name="label3" caption="bind:&quot;Leaves approved yet:&quot; +Variables.leaves_yet.dataSet[$i].c2"></wm-label>
+            <wm-liveform errormessage="bind:Variables.leaves_yet.dataSet[$i].c2>=100? &quot;You have already reached limit of your vacations 100 this year&quot;:&quot;Something went wrong&quot;" title="Vacation Info" iconclass="wi wi-edit"
+                defaultmode="Edit" dataset="bind:Variables.HrdbVacationData.dataSet" captionalign="left" captionposition="top" name="VacationLiveForm1" on-success="Actions.goToPage_MyLeaves.invoke()">
+                <wm-layoutgrid columns="3" name="layoutgrid1">
+                    <wm-gridrow name="gridrow1">
+                        <wm-gridcolumn columnwidth="4" name="gridcolumn1">
+                            <wm-form-field name="startDate" displayname="Start Date" show="true" primary-key="false" generator="assigned" key="startDate" type="date" readonly="false" required="false" widget="date" datepattern="MMM d, y" placeholder="Select date"
+                                outputformat="yyyy-MM-dd"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="4" name="gridcolumn2">
+                            <wm-form-field name="endDate" displayname="End Date" show="true" primary-key="false" generator="assigned" key="endDate" type="date" readonly="false" required="false" widget="date" datepattern="MMM d, y" placeholder="Select date"
+                                outputformat="yyyy-MM-dd"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="4" name="gridcolumn3">
+                            <wm-form-field name="employee" displayname="Employee" show="false" primary-key="false" generator="assigned" key="employee" type="list" is-related="true" readonly="false" required="true" widget="select" matchmode="startignorecase"
+                                defaultvalue="bind:Variables.EmployeeDetails.firstRecord" placeholder="Select value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                    <wm-gridrow name="gridrow2">
+                        <wm-gridcolumn columnwidth="4" name="gridcolumn4">
+                            <wm-form-field name="status" displayname="Status" show="false" primary-key="false" generator="assigned" key="status" type="string" readonly="false" required="false" widget="text" maxchars="255" defaultvalue="Pending" inputtype="text"
+                                placeholder="Enter value"></wm-form-field>
+                        </wm-gridcolumn>
+                        <wm-gridcolumn columnwidth="4" name="gridcolumn5">
+                            <wm-form-field name="type" displayname="Type" show="true" primary-key="false" generator="assigned" key="type" type="string" readonly="false" required="false" widget="select" maxchars="255" dataset="Sick, Personal" datafield="All Fields"
+                                placeholder="Select value"></wm-form-field>
+                        </wm-gridcolumn>
+                    </wm-gridrow>
+                </wm-layoutgrid>
+                <wm-form-field name="id" displayname="Id" show="false" primary-key="true" generator="identity" key="id" type="integer" readonly="true" required="true" step="0" widget="number" inputtype="number" placeholder=""></wm-form-field>
+                <wm-label padding="unset 0.5em" caption="bind:Variables.leaves_yet.dataSet[$i].c2>=100? &quot;Your leaves limit reached please contact your department in personal&quot;:&quot;&quot;" name="label2" color="#ff0000" fontsize="22"></wm-label>
+                <wm-form-action key="reset" display-name="Reset" show="true" class="form-reset btn-default" iconclass="wi wi-refresh" title="Reset" action="reset()" disabled="false" widget-type="button" type="button" update-mode="true"></wm-form-action>
+                <wm-form-action key="save" display-name="Save" show="true" class="form-save btn-success" iconclass="wi wi-save" title="Save" accessroles="Authenticated" disabled="bind:Variables.leaves_yet.dataSet[$i].c2 >= 100? true : false"
+                    widget-type="button" type="submit" update-mode="true"></wm-form-action>
+            </wm-liveform>
+        </wm-page-content>
+    </wm-content>
+    <wm-footer content="footer" name="footer1"></wm-footer>
+</wm-page>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <sql-query name="cavation_days">
+        <![CDATA[
+        select d.NAME, sum(END_DATE - START_DATE ) as days 
+from VACATION v, EMPLOYEE e, DEPARTMENT d
+where e.Emp_ID = v.EMP_ID
+and e.DEPT_ID = d.DEPT_ID
+group by d.NAME
+        ]]>
+    </sql-query>
+
+    <sql-query name="cavation_days__count">
+        <![CDATA[
+        select count(*) from (select d.NAME, sum(END_DATE - START_DATE ) as days 
+from VACATION v, EMPLOYEE e, DEPARTMENT d
+where e.Emp_ID = v.EMP_ID
+and e.DEPT_ID = d.DEPT_ID
+group by d.NAME) wmTempTable
+        ]]>
+    </sql-query>
+
+    <sql-query name="vacationlist2">
+        <![CDATA[
+        select * from vacation
+        ]]>
+    </sql-query>
+
+    <sql-query name="vacationlist2__count">
+        <![CDATA[
+        select count(*) from (select * from vacation) wmTempTable
+        ]]>
+    </sql-query>
+
+    <sql-query name="total_leaves_yet">
+        <![CDATA[
+        SELECT emp_id, sum(DATEDIFF('day', Start_date,end_date)) FROM  vacation  where status='Approved' AND emp_id=:id group by emp_Id
+        ]]>
+    <query-param name="id" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="total_leaves_yet__count">
+        <![CDATA[
+        select count(*) from (SELECT emp_id, sum(DATEDIFF('day', Start_date,end_date)) FROM  vacation  where status='Approved' AND emp_id=:id group by emp_Id) wmTempTable
+        ]]>
+    <query-param name="id" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="LeaveAction">
+        <![CDATA[
+        update Vacation set status=:status where id=:id
+        ]]>
+    <query-param name="status" type="java.lang.String"/>
+    <query-param name="id" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="tobeApprovvedLeaves">
+        <![CDATA[
+        Select e.firstname,e.lastname,e.picurl,e.birthdate,e.job_title,e.city,v.*from employee e,vacation v where e.emp_id=v.emp_id and manager_id=:SERVER__USER_ID__data and status ='Pending'
+        ]]>
+    <query-param name="SERVER__USER_ID__data" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="tobeApprovvedLeaves__count">
+        <![CDATA[
+        select count(*) from (Select e.firstname,e.lastname,e.picurl,e.birthdate,e.job_title,e.city,v.*from employee e,vacation v where e.emp_id=v.emp_id and manager_id=:SERVER__USER_ID__data and status ='Pending') wmTempTable
+        ]]>
+    <query-param name="SERVER__USER_ID__data" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="chartDataByManagerId">
+        <![CDATA[
+        SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved' And manager_id=:manger_id group by emp_id
+        ]]>
+    <query-param name="manger_id" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="chartDataByManagerId__count">
+        <![CDATA[
+        select count(*) from (SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved' And manager_id=:manger_id group by emp_id) wmTempTable
+        ]]>
+    <query-param name="manger_id" type="java.lang.Integer"/>
+    </sql-query>
+
+    <sql-query name="chartdataall">
+        <![CDATA[
+        SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved'  group by emp_id
+        ]]>
+    </sql-query>
+
+    <sql-query name="chartdataall__count">
+        <![CDATA[
+        select count(*) from (SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved'  group by emp_id) wmTempTable
+        ]]>
+    </sql-query>
+</hibernate-mapping>

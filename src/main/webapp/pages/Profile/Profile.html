@@ -1,0 +1,59 @@
+<wm-page pagetitle="Profile" name="page1">
+    <wm-header content="header" name="header1"></wm-header>
+    <wm-top-nav content="topnav" name="top_nav1"></wm-top-nav>
+    <wm-content name="content1">
+        <wm-left-panel columnwidth="2" content="leftnav" name="left_panel1"></wm-left-panel>
+        <wm-page-content columnwidth="10" name="page_content1">
+            <wm-layoutgrid name="layoutgrid1" columns="2">
+                <wm-gridrow name="gridrow3">
+                    <wm-gridcolumn columnwidth="6" name="gridcolumn5">
+                        <wm-list listclass="list-group" template="true" template-name="Business Card" itemsperrow="xs-1 sm-1 md-1 lg-1" class="list-card" statehandler="URL" name="getEmployeeList1" dataset="bind:Variables.UserById.dataSet" navigation="Pager"
+                            pagesize="20">
+                            <wm-listtemplate layout="media" name="listtemplate1">
+                                <wm-card name="card1">
+                                    <wm-card-content fontsize="0.8" fontunit="em" name="card_content1">
+                                        <wm-layoutgrid columns="2" name="layoutgrid2" show="true">
+                                            <wm-gridrow name="gridrow5">
+                                                <wm-gridcolumn colwidth="6" columnwidth="6" class="col-xs-6" name="gridcolumn9">
+                                                    <wm-picture name="Picture" width="100%" picturesource="bind:Variables.UserById.dataSet[$i].picurl"></wm-picture>
+                                                </wm-gridcolumn>
+                                                <wm-gridcolumn colwidth="6" columnwidth="6" padding="unset 1.25em" class="col-xs-6 vertical-align-bottom" name="gridcolumn10">
+                                                    <wm-label name="ID" caption="ID" class="text-muted p" margin="unset unset 0px unset" whitespace="nowrap" fontsize="0"></wm-label>
+                                                    <wm-label name="Name" caption="bind:Variables.UserById.dataSet[$i].firstname" class="h4" margin="0px unset" whitespace="nowrap"></wm-label>
+                                                    <wm-label name="JobTitle" caption="bind:Variables.UserById.dataSet[$i].jobTitle" class="h5" margin="0px unset unset unset" whitespace="nowrap"></wm-label>
+                                                    <wm-label name="Department" caption="bind:Variables.UserById.dataSet[$i].department.name" class="p text-muted" margin="unset unset 0px unset" whitespace="nowrap"></wm-label>
+                                                    <wm-label name="Location" caption="bind:Variables.UserById.dataSet[$i].city" class="text-muted p" whitespace="nowrap"></wm-label>
+                                                    <wm-anchor name="PhoneNumber" caption="bind:Variables.UserById.dataSet[$i].birthdate" class="h5" hyperlink="tel:" margin="0px unset" whitespace="nowrap"></wm-anchor>
+                                                    <wm-anchor name="EmailID" class="p text-muted" hyperlink="mailto://" caption="" whitespace="nowrap"></wm-anchor>
+                                                    <wm-label caption="bind:Variables.UserById.dataSet[$i].mangeVariables.UserById.dataSet.employeeByManagerId!==null? &quot;Manager/Leaves Approver: &quot; +  Variables.UserById.dataSet[$i].mangeVariables.UserById.dataSet.employeeByManagerId.firstname + Variables.UserById.dataSet.employeeByManagerId.lastname :&quot;Manager/Leaves Approver: &quot; +  &quot;Higher Authority&quot;"
+                                                        class="h5" margin="0px unset unset unset" whitespace="nowrap" name="label6"></wm-label>
+                                                </wm-gridcolumn>
+                                            </wm-gridrow>
+                                        </wm-layoutgrid>
+                                    </wm-card-content>
+                                </wm-card>
+                            </wm-listtemplate>
+                        </wm-list>
+                    </wm-gridcolumn>
+                    <wm-gridcolumn columnwidth="6" name="gridcolumn6">
+                        <wm-table statehandler="URL" name="EmployeeTable1" title="Cow workers" dataset="bind:Variables.HrdbEmployeeData.dataSet" navigation="Pager" subheading="Who work with you in yoour department">
+                            <wm-table-column binding="firstname" caption="Firstname" width="100px" edit-widget-type="text" type="string" generator="assigned" show="true" readonly="false"></wm-table-column>
+                            <wm-table-column binding="lastname" caption="Lastname" edit-widget-type="text" type="string" generator="assigned" show="true" readonly="false"></wm-table-column>
+                            <wm-table-column binding="street" caption="Street" edit-widget-type="text" type="string" generator="assigned" show="true" readonly="false"></wm-table-column>
+                            <wm-table-column binding="birthdate" caption="Birthdate" edit-widget-type="date" type="date" generator="assigned" show="true" readonly="false"></wm-table-column>
+                            <wm-table-column binding="picurl" caption="Picurl" widget-type="image" edit-widget-type="text" type="string" generator="assigned" show="true" readonly="false">
+                                <wm-picture picturesource="bind:row.getProperty('picurl')" hint="bind:row.getProperty('picurl')" class="" conditionalclass="" conditionalstyle=""></wm-picture>
+                            </wm-table-column>
+                            <wm-table-column binding="jobTitle" caption="Job Title" edit-widget-type="text" type="string" generator="assigned" show="true" readonly="false"></wm-table-column>
+                        </wm-table>
+                    </wm-gridcolumn>
+                </wm-gridrow>
+                <wm-gridrow name="gridrow4">
+                    <wm-gridcolumn columnwidth="6" name="gridcolumn7"></wm-gridcolumn>
+                    <wm-gridcolumn columnwidth="6" name="gridcolumn8"></wm-gridcolumn>
+                </wm-gridrow>
+            </wm-layoutgrid>
+        </wm-page-content>
+    </wm-content>
+    <wm-footer content="footer" name="footer1"></wm-footer>
+</wm-page>

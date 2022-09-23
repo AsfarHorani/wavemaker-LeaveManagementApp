@@ -1,0 +1,524 @@
+{
+  "LeaveAction" : {
+    "name" : "LeaveAction",
+    "description" : "after leave action",
+    "version" : "V2",
+    "queryString" : "update Vacation set status=:status where id=:id",
+    "countQueryString" : null,
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : false,
+    "type" : "UPDATE",
+    "parameters" : [ {
+      "name" : "status",
+      "type" : "string",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "variableName" : "",
+      "testValue" : "rejected/approved",
+      "required" : true
+    }, {
+      "name" : "id",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "variableName" : "",
+      "testValue" : "1",
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : true,
+      "typeRef" : "com.leave_management_system.hrdb.models.query.LeaveActionRequest",
+      "method" : "PUT"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "java.lang.Integer",
+      "returns" : "ENTITY",
+      "responseType" : "SINGLE"
+    }
+  },
+  "cavation_days" : {
+    "name" : "cavation_days",
+    "description" : "a",
+    "version" : "V2",
+    "queryString" : "select d.NAME, sum(END_DATE - START_DATE ) as days \nfrom VACATION v, EMPLOYEE e, DEPARTMENT d\nwhere e.Emp_ID = v.EMP_ID\nand e.DEPT_ID = d.DEPT_ID\ngroup by d.NAME",
+    "countQueryString" : "select count(*) from (select d.NAME, sum(END_DATE - START_DATE ) as days \nfrom VACATION v, EMPLOYEE e, DEPARTMENT d\nwhere e.Emp_ID = v.EMP_ID\nand e.DEPT_ID = d.DEPT_ID\ngroup by d.NAME) wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.CavationDaysResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "NAME",
+        "fieldName" : "name",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "DAYS",
+        "fieldName" : "days",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "chartDataByManagerId" : {
+    "name" : "chartDataByManagerId",
+    "description" : "s",
+    "version" : "V2",
+    "queryString" : "SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved' And manager_id=:manger_id group by emp_id",
+    "countQueryString" : "select count(*) from (SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved' And manager_id=:manger_id group by emp_id) wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "manger_id",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "variableName" : "",
+      "testValue" : "1",
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.ChartDataByManagerIdResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "EMP_ID",
+        "fieldName" : "empId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "FIRSTNAME",
+        "fieldName" : "firstname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "LASTNAME",
+        "fieldName" : "lastname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "MANAGER_ID",
+        "fieldName" : "managerId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "TOTAL_VACATIONS",
+        "fieldName" : "totalVacations",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "chartdataall" : {
+    "name" : "chartdataall",
+    "description" : "a",
+    "version" : "V2",
+    "queryString" : "SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved'  group by emp_id",
+    "countQueryString" : "select count(*) from (SELECT distinct emp_id,EMPLOYEE.firstname,lastname, manager_id, sum(DATEDIFF('day', VACATION.Start_date,VACATION.end_date)) as total_vacations from employee inner join vacation on employee.emp_id=vacation.emp_id and vacation.status='Approved'  group by emp_id) wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.ChartdataallResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "SINGLE",
+      "properties" : [ {
+        "name" : "EMP_ID",
+        "fieldName" : "empId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "FIRSTNAME",
+        "fieldName" : "firstname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "LASTNAME",
+        "fieldName" : "lastname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "MANAGER_ID",
+        "fieldName" : "managerId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "TOTAL_VACATIONS",
+        "fieldName" : "totalVacations",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "tobeApprovvedLeaves" : {
+    "name" : "tobeApprovvedLeaves",
+    "description" : "Leaves to be approved by manager",
+    "version" : "V2",
+    "queryString" : "Select e.firstname,e.lastname,e.picurl,e.birthdate,e.job_title,e.city,v.*from employee e,vacation v where e.emp_id=v.emp_id and manager_id=:data and status ='Pending'",
+    "countQueryString" : "select count(*) from (Select e.firstname,e.lastname,e.picurl,e.birthdate,e.job_title,e.city,v.*from employee e,vacation v where e.emp_id=v.emp_id and manager_id=:data and status ='Pending') wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "data",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "SERVER",
+      "variableName" : "USER_ID",
+      "testValue" : "1",
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.TobeApprovvedLeavesResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "FIRSTNAME",
+        "fieldName" : "firstname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "LASTNAME",
+        "fieldName" : "lastname",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "PICURL",
+        "fieldName" : "picurl",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "BIRTHDATE",
+        "fieldName" : "birthdate",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.sql.Date",
+          "list" : false
+        }
+      }, {
+        "name" : "JOB_TITLE",
+        "fieldName" : "jobTitle",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "CITY",
+        "fieldName" : "city",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "ID",
+        "fieldName" : "id",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "START_DATE",
+        "fieldName" : "startDate",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.sql.Date",
+          "list" : false
+        }
+      }, {
+        "name" : "END_DATE",
+        "fieldName" : "endDate",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.sql.Date",
+          "list" : false
+        }
+      }, {
+        "name" : "EMP_ID",
+        "fieldName" : "empId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "TENANT_ID",
+        "fieldName" : "tenantId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "STATUS",
+        "fieldName" : "status",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "TYPE",
+        "fieldName" : "type",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "total_leaves_yet" : {
+    "name" : "total_leaves_yet",
+    "description" : "adasd",
+    "version" : "V2",
+    "queryString" : "SELECT emp_id, sum(DATEDIFF('day', Start_date,end_date)) FROM  vacation  where status='Approved' AND emp_id=:id group by emp_Id",
+    "countQueryString" : "select count(*) from (SELECT emp_id, sum(DATEDIFF('day', Start_date,end_date)) FROM  vacation  where status='Approved' AND emp_id=:id group by emp_Id) wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ {
+      "name" : "id",
+      "type" : "integer",
+      "list" : false,
+      "variableType" : "PROMPT",
+      "variableName" : "",
+      "testValue" : "4",
+      "required" : true
+    } ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.TotalLeavesYetResponse",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "EMP_ID",
+        "fieldName" : "empId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "C2",
+        "fieldName" : "c2",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  },
+  "vacationlist2" : {
+    "name" : "vacationlist2",
+    "description" : "a",
+    "version" : "V2",
+    "queryString" : "select * from vacation",
+    "countQueryString" : "select count(*) from (select * from vacation) wmTempTable",
+    "offlineQueryString" : null,
+    "nativeSql" : true,
+    "fetchCount" : true,
+    "type" : "SELECT",
+    "parameters" : [ ],
+    "request" : {
+      "wrapped" : false,
+      "typeRef" : null,
+      "method" : "GET"
+    },
+    "identifiers" : [ ],
+    "response" : {
+      "typeRef" : "com.leave_management_system.hrdb.models.query.Vacationlist2Response",
+      "returns" : "CUSTOM",
+      "responseType" : "PAGINATED",
+      "properties" : [ {
+        "name" : "ID",
+        "fieldName" : "id",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "START_DATE",
+        "fieldName" : "startDate",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.sql.Date",
+          "list" : false
+        }
+      }, {
+        "name" : "END_DATE",
+        "fieldName" : "endDate",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.sql.Date",
+          "list" : false
+        }
+      }, {
+        "name" : "EMP_ID",
+        "fieldName" : "empId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "TENANT_ID",
+        "fieldName" : "tenantId",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      }, {
+        "name" : "STATUS",
+        "fieldName" : "status",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "TYPE",
+        "fieldName" : "type",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.lang.String",
+          "list" : false
+        }
+      }, {
+        "name" : "LEAVES_ALLOCATED",
+        "fieldName" : "leavesAllocated",
+        "optional" : false,
+        "fieldType" : {
+          "type" : "PRIMITIVE",
+          "typeRef" : "java.math.BigInteger",
+          "list" : false
+        }
+      } ]
+    }
+  }
+}

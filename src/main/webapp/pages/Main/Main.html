@@ -1,0 +1,19 @@
+<wm-page name="mainpage" pagetitle="Main">
+    <wm-header content="header" name="header" height="auto"></wm-header>
+    <wm-top-nav name="topnav" content="topnav"></wm-top-nav>
+    <wm-content name="content">
+        <wm-left-panel columnwidth="2" name="leftpanel" content="leftnav"></wm-left-panel>
+        <wm-page-content columnwidth="8" name="mainContent" padding="unset 15px">
+            <wm-chart type="Column" title="Vacation stats of your employee who work under you:" height="250px" iconclass="wi wi-bar-chart" name="chart2" dataset="bind:Variables.HrdbExecuteChartDataByManagerId.dataSet" xaxisdatakey="firstname" yaxisdatakey="totalVacations"></wm-chart>
+            <wm-table statehandler="URL" title="" dataset="bind:Variables.HrdbExecuteChartDataByManagerId.dataSet" navigation="Pager" name="table1">
+                <wm-table-column binding="empId" caption="Emp Id" pcdisplay="true" mobiledisplay="true" tabletdisplay="true" type="long"></wm-table-column>
+                <wm-table-column binding="firstname" caption="Firstname" pcdisplay="true" mobiledisplay="true" tabletdisplay="true" type="string"></wm-table-column>
+                <wm-table-column binding="lastname" caption="Lastname" pcdisplay="true" mobiledisplay="true" tabletdisplay="true" type="string"></wm-table-column>
+                <wm-table-column binding="managerId" caption="Manager Id" pcdisplay="true" mobiledisplay="true" tabletdisplay="true" type="long"></wm-table-column>
+                <wm-table-column binding="totalVacations" caption="Total Vacations" pcdisplay="true" mobiledisplay="true" tabletdisplay="true" type="long"></wm-table-column>
+            </wm-table>
+        </wm-page-content>
+        <wm-right-panel columnwidth="2" name="rightpanel" content="rightnav"></wm-right-panel>
+    </wm-content>
+    <wm-footer name="footer" content="footer"></wm-footer>
+</wm-page>

@@ -1,0 +1,17 @@
+<wm-partial name="leftnav" type="leftnav">
+    <wm-nav name="leftnavigation" type="pills" layout="stacked">
+        <wm-nav-item name="list_dashboard">
+            <wm-anchor caption="Profile" name="profileLink" iconclass="wi wi-bar-graph" on-click="Actions.goToPage_Profile.invoke()" accessroles="Authenticated"></wm-anchor>
+        </wm-nav-item>
+        <wm-nav-item name="list_order">
+            <wm-anchor caption="Leave Mangemenent" name="leaveManegenment" iconclass="wi wi-file" on-click="Actions.goToPage_LeaveManagement.invoke()" accessroles="admin"></wm-anchor>
+        </wm-nav-item>
+        <wm-nav-item name="list_inventory">
+            <wm-anchor caption="My Leaves" name="inventoryLink" iconclass="wi wi-tag" on-click="Actions.goToPage_MyLeaves.invoke()" accessroles="Authenticated"></wm-anchor>
+        </wm-nav-item>
+        <wm-nav-item name="list_support">
+            <wm-anchor caption="Employee List" name="employeeList" iconclass="wi wi-envelope" on-click="Actions.goToPage_EmployeeLIst.invoke()" accessroles="admin"></wm-anchor>
+            <wm-anchor caption="Apply Leaves" iconclass="wi wi-envelope" on-click="Actions.goToPage_ApplyLeaves.invoke()" name="applyLeaves" accessroles="Authenticated"></wm-anchor>
+        </wm-nav-item>
+    </wm-nav>
+</wm-partial>

@@ -1,0 +1,13 @@
+[ {
+  "name" : "material-2.0",
+  "version" : "2.1",
+  "platformVersion" : null,
+  "artifactType" : "THEME",
+  "artifactDependencyList" : null
+}, {
+  "name" : "googlemaps",
+  "version" : "7.0",
+  "platformVersion" : null,
+  "artifactType" : "PREFAB",
+  "artifactDependencyList" : null
+} ]
